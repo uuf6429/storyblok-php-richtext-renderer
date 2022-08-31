@@ -17,7 +17,7 @@ class RenderTest extends TestCase
     /**
      * @dataProvider renderOpeningTagDataProvider
      */
-    public function testRenderOpeningTag($expected, $input): void
+    public function testRenderOpeningTag(string $expected, $input): void
     {
         $renderer = new Render();
 
@@ -61,7 +61,7 @@ class RenderTest extends TestCase
     /**
      * @dataProvider renderClosingTagDataProvider
      */
-    public function testRenderClosingTag($expected, $input): void
+    public function testRenderClosingTag(string $expected, $input): void
     {
         $renderer = new Render();
 

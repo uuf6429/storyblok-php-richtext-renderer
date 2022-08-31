@@ -49,7 +49,7 @@ class Render
 
                 foreach ($tag['attrs'] as $key => $value) {
                     if (!is_null($value)) {
-                        $result .= " $key=\"$value\"";
+                        $result .= " $key=\"$value\""; // FIXME this looks insecure...shouldn't key and value be html-encoded??
                     }
                 }
             }

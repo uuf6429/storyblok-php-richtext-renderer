@@ -1,7 +1,9 @@
 <?php
 
-/** @noinspection HtmlUnknownAttribute */
-/** @noinspection HtmlDeprecatedTag */
+/**
+ * @noinspection HtmlUnknownAttribute
+ * @noinspection HtmlDeprecatedTag
+ */
 
 namespace Storyblok\RichtextRender;
 
@@ -1152,7 +1154,7 @@ class ResolverTest extends TestCase
     {
         return static function () use ($tag) {
             return [
-                "tag" => $tag
+                'tag' => $tag
             ];
         };
     }
