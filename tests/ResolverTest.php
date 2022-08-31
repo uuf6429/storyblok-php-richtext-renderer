@@ -1,14 +1,18 @@
-<?php /** @noinspection HtmlUnknownAttribute */
+<?php
 
-/** @noinspection HtmlDeprecatedTag */
+/**
+ * @noinspection HtmlUnknownAttribute
+ * @noinspection HtmlDeprecatedTag
+ */
 
 namespace Storyblok\RichtextRender;
 
+use Closure;
 use PHPUnit\Framework\TestCase;
 
 class ResolverTest extends TestCase
 {
-    public function testRenderSpanWithClassAttribute()
+    public function testRenderSpanWithClassAttribute(): void
     {
         $resolver = new Resolver();
 
@@ -35,7 +39,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderHrTag()
+    public function testRenderHrTag(): void
     {
         $resolver = new Resolver();
 
@@ -53,7 +57,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderImgTag()
+    public function testRenderImgTag(): void
     {
         $resolver = new Resolver();
 
@@ -75,7 +79,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderLinkTag()
+    public function testRenderLinkTag(): void
     {
         $resolver = new Resolver();
 
@@ -104,7 +108,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderLinkTagWithEmail()
+    public function testRenderLinkTagWithEmail(): void
     {
         $resolver = new Resolver();
 
@@ -134,7 +138,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderTagWithNullAttribute()
+    public function testRenderTagWithNullAttribute(): void
     {
         $resolver = new Resolver();
 
@@ -163,7 +167,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderCodeTag()
+    public function testRenderCodeTag(): void
     {
         $resolver = new Resolver();
 
@@ -184,7 +188,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderHeadingTag()
+    public function testRenderHeadingTag(): void
     {
         $resolver = new Resolver();
 
@@ -207,7 +211,7 @@ class ResolverTest extends TestCase
 
     }
 
-    public function testRenderHeadingTagWhithoutLevel()
+    public function testRenderHeadingTagWithoutLevel(): void
     {
         $resolver = new Resolver();
 
@@ -226,7 +230,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderBulletList()
+    public function testRenderBulletList(): void
     {
         $resolver = new Resolver();
         $data = [
@@ -269,7 +273,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderOrderedList()
+    public function testRenderOrderedList(): void
     {
         $resolver = new Resolver();
         $data = [
@@ -312,7 +316,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderComplexRender()
+    public function testRenderComplexRender(): void
     {
         $resolver = new Resolver();
 
@@ -379,7 +383,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderCustomSchema()
+    public function testRenderCustomSchema(): void
     {
         $custom = new CustomSchema(
             [
@@ -414,7 +418,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderCustomSchemaWithoutMarks()
+    public function testRenderCustomSchemaWithoutMarks(): void
     {
         $custom = new CustomSchema(
             [
@@ -446,7 +450,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderLinkTagWithAnchor()
+    public function testRenderLinkTagWithAnchor(): void
     {
         $resolver = new Resolver();
 
@@ -476,7 +480,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderLinkTagWithStory()
+    public function testRenderLinkTagWithStory(): void
     {
         $resolver = new Resolver();
 
@@ -511,7 +515,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderLinkTagWithoutAnchor()
+    public function testRenderLinkTagWithoutAnchor(): void
     {
         $resolver = new Resolver();
 
@@ -541,8 +545,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-
-    public function testRenderLinkTagWithoutAnchorButWithCssClass()
+    public function testRenderLinkTagWithoutAnchorButWithCssClass(): void
     {
         $resolver = new Resolver();
 
@@ -578,7 +581,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testRenderParagraphWithClassAttribute()
+    public function testRenderParagraphWithClassAttribute(): void
     {
         $resolver = new Resolver();
 
@@ -614,8 +617,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-
-    public function testRenderParagraphWithThreeClassAttribute()
+    public function testRenderParagraphWithThreeClassAttribute(): void
     {
         $resolver = new Resolver();
 
@@ -683,7 +685,7 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    public function testFullText()
+    public function testFullText(): void
     {
         $resolver = new Resolver();
 
@@ -1198,11 +1200,11 @@ class ResolverTest extends TestCase
         $this->assertEquals($expected, $resolver->render((object)$data));
     }
 
-    private function getTag($tag)
+    private function getTag($tag): Closure
     {
         return static function () use ($tag) {
             return [
-                "tag" => $tag
+                'tag' => $tag
             ];
         };
     }

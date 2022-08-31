@@ -4,7 +4,7 @@ namespace Storyblok\RichtextRender\Utils;
 
 class Utils
 {
-    public static function pick($attrs, $allowed)
+    public static function pick($attrs, $allowed): ?array
     {
         if (empty($attrs)) {
             return null;

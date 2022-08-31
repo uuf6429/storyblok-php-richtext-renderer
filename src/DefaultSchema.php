@@ -2,11 +2,12 @@
 
 namespace Storyblok\RichtextRender;
 
+use Closure;
 use Storyblok\RichtextRender\Utils\Utils;
 
 class DefaultSchema implements SchemaInterface
 {
-    public function getMarks()
+    public function getMarks(): array
     {
         return [
             'bold' => $this->getTag('tag', 'b'),
@@ -20,7 +21,7 @@ class DefaultSchema implements SchemaInterface
         ];
     }
 
-    public function getNodes()
+    public function getNodes(): array
     {
         return [
             'blockquote' => $this->getTag('tag', 'blockquote'),
@@ -36,7 +37,7 @@ class DefaultSchema implements SchemaInterface
         ];
     }
 
-    protected function getLink($tagName)
+    protected function getLink(string $tagName): Closure
     {
         return static function ($node) use ($tagName) {
             $attrs = $node['attrs'];
@@ -71,7 +72,7 @@ class DefaultSchema implements SchemaInterface
         };
     }
 
-    protected function getHeading($tag)
+    protected function getHeading(string $tag): Closure
     {
         return function ($node) use ($tag) {
             return [
@@ -80,7 +81,7 @@ class DefaultSchema implements SchemaInterface
         };
     }
 
-    protected function getTag($tag, $tagName)
+    protected function getTag(string $tag, string $tagName): Closure
     {
         return static function () use ($tag, $tagName) {
             return [
@@ -89,7 +90,7 @@ class DefaultSchema implements SchemaInterface
         };
     }
 
-    protected function getTagStyled($tagName)
+    protected function getTagStyled(string $tagName): Closure
     {
         return static function ($node) use ($tagName) {
             return [
@@ -103,7 +104,7 @@ class DefaultSchema implements SchemaInterface
         };
     }
 
-    protected function getImage()
+    protected function getImage(): Closure
     {
         return static function ($node) {
             return [
@@ -117,7 +118,7 @@ class DefaultSchema implements SchemaInterface
         };
     }
 
-    protected function getCodeBlock()
+    protected function getCodeBlock(): Closure
     {
         return function ($node) {
             return [
@@ -137,7 +138,7 @@ class DefaultSchema implements SchemaInterface
         return Utils::get($node, 'attrs', []);
     }
 
-    protected function getLevel($node)
+    protected function getLevel($node): int
     {
         if ($node && array_key_exists('attrs', $node)) {
             $attrs = $node['attrs'];

@@ -13,12 +13,12 @@ class CustomSchema implements SchemaInterface
         $this->marks = $marks;
     }
 
-    public function getNodes()
+    public function getNodes(): array
     {
         return $this->nodes;
     }
 
-    public function getMarks()
+    public function getMarks(): array
     {
         return $this->marks;
     }

@@ -9,10 +9,10 @@ interface SchemaInterface
     /**
      * @return array<string, Closure>
      */
-    public function getMarks();
+    public function getMarks(): array;
 
     /**
      * @return array<string, Closure>
      */
-    public function getNodes();
+    public function getNodes(): array;
 }
