@@ -3,7 +3,6 @@
 namespace Storyblok\RichtextRender;
 
 use Storyblok\RichtextRender\Utils\Render;
-use Storyblok\RichtextRender\Utils\Utils;
 
 class Resolver
 {
@@ -11,19 +10,10 @@ class Resolver
     protected $marks;
     protected $nodes;
 
-    public function __construct($options = [], Render $renderer=null)
+    public function __construct(SchemaInterface $schema = null, Render $renderer = null)
     {
+        $schema = $schema ?: new DefaultSchema();
         $this->renderer = $renderer ?: new Render();
-        
-        $_options = (array) $options;
-        if (!empty($_options)) {
-            $this->marks = Utils::get($_options, 'marks', []);
-            $this->nodes = Utils::get($_options, 'nodes', []);
-            return;
-        }
-
-        $schema = new Schema();
-
         $this->marks = $schema->getMarks();
         $this->nodes = $schema->getNodes();
     }
@@ -31,7 +21,7 @@ class Resolver
     public function render($data)
     {
         $html = '';
-        $data = (array) $data;
+        $data = (array)$data;
 
         foreach ($data['content'] as $node) {
             $html .= $this->renderNode($node);

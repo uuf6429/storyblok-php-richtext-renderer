@@ -381,14 +381,14 @@ class ResolverTest extends TestCase
 
     public function testRenderCustomSchema()
     {
-        $custom = [
-            'nodes' => [
+        $custom = new CustomSchema(
+            [
                 'paragraph' => $this->getTag("p")
             ],
-            'marks' => [
+            [
                 'strike' => $this->getTag("strike")
             ]
-        ];
+        );
 
         $resolver = new Resolver($custom);
 
@@ -416,11 +416,11 @@ class ResolverTest extends TestCase
 
     public function testRenderCustomSchemaWithoutMarks()
     {
-        $custom = [
-            'nodes' => [
+        $custom = new CustomSchema(
+            [
                 'paragraph' => $this->getTag("p")
             ]
-        ];
+        );
 
         $resolver = new Resolver($custom);
 
