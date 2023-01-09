@@ -3,7 +3,6 @@
 namespace Storyblok\RichtextRender;
 
 use Storyblok\RichtextRender\Utils\Render;
-use Storyblok\RichtextRender\Utils\Utils;
 
 class Resolver
 {
@@ -11,27 +10,18 @@ class Resolver
     protected $marks;
     protected $nodes;
 
-    public function __construct($options = [], Render $renderer=null)
+    public function __construct(?SchemaInterface $schema = null, ?Render $renderer = null)
     {
+        $schema = $schema ?: new DefaultSchema();
         $this->renderer = $renderer ?: new Render();
-        
-        $_options = (array) $options;
-        if (!empty($_options)) {
-            $this->marks = Utils::get($_options, 'marks', []);
-            $this->nodes = Utils::get($_options, 'nodes', []);
-            return;
-        }
-
-        $schema = new Schema();
-
         $this->marks = $schema->getMarks();
         $this->nodes = $schema->getNodes();
     }
 
-    public function render($data)
+    public function render($data): string
     {
         $html = '';
-        $data = (array) $data;
+        $data = (array)$data;
 
         foreach ($data['content'] as $node) {
             $html .= $this->renderNode($node);
@@ -40,7 +30,7 @@ class Resolver
         return $html;
     }
 
-    protected function renderNode($item)
+    protected function renderNode($item): string
     {
         $html = [];
 
@@ -91,7 +81,7 @@ class Resolver
         return implode('', $html);
     }
 
-    protected function getMatchingNode($item)
+    protected function getMatchingNode($item): ?array
     {
         if (array_key_exists($item['type'], $this->nodes)) {
             $fn = $this->nodes[$item['type']];
@@ -104,7 +94,7 @@ class Resolver
         return null;
     }
 
-    protected function getMatchingMark($item)
+    protected function getMatchingMark($item): ?array
     {
         if (array_key_exists($item['type'], $this->marks)) {
             $fn = $this->marks[$item['type']];
