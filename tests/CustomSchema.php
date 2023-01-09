@@ -4,10 +4,10 @@ namespace Storyblok\RichtextRender;
 
 class CustomSchema implements SchemaInterface
 {
-    private $nodes;
-    private $marks;
+    private array $nodes;
+    private array $marks;
 
-    public function __construct($nodes = [], $marks = [])
+    public function __construct(array $nodes = [], array $marks = [])
     {
         $this->nodes = $nodes;
         $this->marks = $marks;

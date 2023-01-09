@@ -47,7 +47,7 @@ class DefaultSchema implements SchemaInterface
                 $anchor = $attrs['anchor'];
 
                 if ($anchor !== '' && !is_null($anchor)) {
-                    $attrs['href'] .= '#' . $anchor;
+                    $attrs['href'] .= "#$anchor";
                 }
 
                 unset($attrs['anchor']);
