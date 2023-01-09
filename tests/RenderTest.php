@@ -7,7 +7,7 @@ use Storyblok\RichtextRender\Utils\Render;
 
 class RenderTest extends TestCase
 {
-    public function testEscapeHml()
+    public function testEscapeHml(): void
     {
         $renderer = new Render();
 
@@ -17,14 +17,14 @@ class RenderTest extends TestCase
     /**
      * @dataProvider renderOpeningTagDataProvider
      */
-    public function testRenderOpeningTag($expected, $input)
+    public function testRenderOpeningTag(string $expected, $input): void
     {
         $renderer = new Render();
 
         $this->assertEquals($expected, $renderer->renderOpeningTag($input));
     }
 
-    public function renderOpeningTagDataProvider()
+    public function renderOpeningTagDataProvider(): array
     {
         return [
             'without argument' => [
@@ -61,14 +61,14 @@ class RenderTest extends TestCase
     /**
      * @dataProvider renderClosingTagDataProvider
      */
-    public function testRenderClosingTag($expected, $input)
+    public function testRenderClosingTag(string $expected, $input): void
     {
         $renderer = new Render();
 
         $this->assertEquals($expected, $renderer->renderClosingTag($input));
     }
 
-    public function renderClosingTagDataProvider()
+    public function renderClosingTagDataProvider(): array
     {
         return [
             'without argument' => [

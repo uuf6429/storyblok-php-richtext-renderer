@@ -4,12 +4,12 @@ namespace Storyblok\RichtextRender\Utils;
 
 class Render
 {
-    public function escapeHTMl($html)
+    public function escapeHTMl(string $html): string
     {
         return htmlspecialchars($html, ENT_QUOTES);
     }
 
-    public function renderClosingTag($tags)
+    public function renderClosingTag($tags): string
     {
         if (is_string($tags)) {
             return "</$tags>";
@@ -28,7 +28,7 @@ class Render
         return implode('', $all);
     }
 
-    public function renderTag($tags, $ending)
+    public function renderTag($tags, string $ending): string
     {
         if (is_string($tags)) {
             return "<$tags$ending>";
@@ -49,7 +49,7 @@ class Render
 
                 foreach ($tag['attrs'] as $key => $value) {
                     if (!is_null($value)) {
-                        $result .= " $key=\"$value\"";
+                        $result .= " $key=\"$value\""; // FIXME this looks insecure...shouldn't key and value be html-encoded??
                     }
                 }
             }
@@ -60,7 +60,7 @@ class Render
         return implode('', $all);
     }
 
-    public function renderOpeningTag($tags)
+    public function renderOpeningTag($tags): string
     {
         return $this->renderTag($tags, '');
     }

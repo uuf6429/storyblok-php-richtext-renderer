@@ -3,35 +3,25 @@
 namespace Storyblok\RichtextRender;
 
 use Storyblok\RichtextRender\Utils\Render;
-use Storyblok\RichtextRender\Utils\Utils;
 
 class Resolver
 {
-    protected $renderer;
-    protected $marks;
-    protected $nodes;
+    protected Render $renderer;
+    protected array $marks;
+    protected array $nodes;
 
-    public function __construct($options = [], Render $renderer=null)
+    public function __construct(?SchemaInterface $schema = null, ?Render $renderer = null)
     {
+        $schema = $schema ?: new DefaultSchema();
         $this->renderer = $renderer ?: new Render();
-        
-        $_options = (array) $options;
-        if (!empty($_options)) {
-            $this->marks = Utils::get($_options, 'marks', []);
-            $this->nodes = Utils::get($_options, 'nodes', []);
-            return;
-        }
-
-        $schema = new Schema();
-
         $this->marks = $schema->getMarks();
         $this->nodes = $schema->getNodes();
     }
 
-    public function render($data)
+    public function render($data): string
     {
         $html = '';
-        $data = (array) $data;
+        $data = (array)$data;
 
         foreach ($data['content'] as $node) {
             $html .= $this->renderNode($node);
@@ -40,17 +30,15 @@ class Resolver
         return $html;
     }
 
-    protected function renderNode($item)
+    protected function renderNode(array $item): string
     {
         $html = [];
 
         if (array_key_exists('marks', $item)) {
-            $marksArray = $item['marks'];
-            foreach ($marksArray as $m) {
-                $mark = $this->getMatchingMark($m);
-
-                if ($mark) {
-                    $html[] = $this->renderer->renderOpeningTag($mark['tag']);
+            foreach ($item['marks'] as $mark) {
+                $matchingMark = $this->getMatchingMark($mark);
+                if ($matchingMark) {
+                    $html[] = $this->renderer->renderOpeningTag($matchingMark['tag']);
                 }
             }
         }
@@ -62,8 +50,7 @@ class Resolver
         }
 
         if (array_key_exists('content', $item)) {
-            $contentArray = $item['content'];
-            foreach ($contentArray as $content) {
+            foreach ($item['content'] as $content) {
                 $html[] = $this->renderNode($content);
             }
         } else if (array_key_exists('text', $item)) {
@@ -79,41 +66,24 @@ class Resolver
         }
 
         if (array_key_exists('marks', $item)) {
-            $itemReverse = array_reverse($item['marks']);
-            foreach ($itemReverse as $m) {
-                $mark = $this->getMatchingMark($m);
-
-                if ($mark) {
-                    $html[] = $this->renderer->renderClosingTag($mark['tag']);
+            foreach (array_reverse($item['marks']) as $mark) {
+                $matchingMark = $this->getMatchingMark($mark);
+                if ($matchingMark) {
+                    $html[] = $this->renderer->renderClosingTag($matchingMark['tag']);
                 }
             }
         }
+
         return implode('', $html);
     }
 
-    protected function getMatchingNode($item)
+    protected function getMatchingNode(array $item): ?array
     {
-        if (array_key_exists($item['type'], $this->nodes)) {
-            $fn = $this->nodes[$item['type']];
-
-            if (is_callable($fn)) {
-                return $fn($item);
-            }
-        }
-
-        return null;
+        return ($fn = $this->nodes[$item['type']] ?? null) ? $fn($item) : null;
     }
 
-    protected function getMatchingMark($item)
+    protected function getMatchingMark(array $item): ?array
     {
-        if (array_key_exists($item['type'], $this->marks)) {
-            $fn = $this->marks[$item['type']];
-
-            if (is_callable($fn)) {
-                return $fn($item);
-            }
-        }
-
-        return null;
+        return ($fn = $this->marks[$item['type']] ?? null) ? $fn($item) : null;
     }
 }

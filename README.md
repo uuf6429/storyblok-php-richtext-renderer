@@ -1,8 +1,10 @@
 # Storyblok PHP Richtext Renderer
 
-This package allows you to get an HTML string from the [richtext field](https://www.storyblok.com/docs/richtext-field) of Storyblok.
+This package allows you to get an HTML string from the [richtext field](https://www.storyblok.com/docs/richtext-field)
+of Storyblok.
 
 ## Installing the Storyblok PHP Richtext Renderer
+
 You can install the Storyblok PHP Richtext Renderer via composer.
 Storyblok PHP Richtext Renderer requires PHP version 7.3 to 8.2. The suggestion is to use an actively supported version of PHP (8.1 and 8.2).
 
@@ -28,9 +30,10 @@ We suggest using the latest version of PHP.
 ```shell
 composer require storyblok/richtext-resolver dev-master
 ```
-## Usage:
 
-Instantiate the `Resolver` class:
+## Usage
+
+First, instantiate the `Resolver` class:
 
 ```php
 use Storyblok\RichtextRender\Resolver;
@@ -39,7 +42,7 @@ $resolver = new Resolver();
 
 ```
 
-Use the function `render()` to get the html string from your richtext field.
+Then use the `render()` method to get the html string from your richtext field.
 
 ```php
 // previous code...
@@ -57,19 +60,37 @@ $data = [
 $resolver->render($data) # renders a html string: '<hr />'
 ```
 
-### How to define a custom schema for resolver?
+### Can I extend or replace the schema for a resolver?
 
-Make a copy of the default schema [storyblok-php-richtext-renderer/src/Schema.php](https://github.com/storyblok/storyblok-php-richtext-renderer/blob/master/src/Schema.php) and add your own schema as parameter to the Richtext class.
+Yes! Either create a class that
+[extends DefaultSchema](https://github.com/storyblok/storyblok-php-richtext-renderer/blob/master/src/DefaultSchema.php)
+or a class that
+[implements SchemaInterface](https://github.com/storyblok/storyblok-php-richtext-renderer/blob/master/src/SchemaInterface.php)
+and then pass it as a parameter to the Resolver class.
+Here's an example:
 
 ```php
-$resolver = new Resolver($my_custom_schema);
+class MySchema extends \Storyblok\RichtextRender\DefaultSchema
+{
+    public function getNodes()
+    {
+        return array_merge(
+            parent::getNodes(),
+            [
+                'my_component' =>  $this->getTag('tag', 'div'),
+            ]
+        );
+    }
+}
+
+$resolver = new Resolver(new MySchema());
 ```
 
 ## Testing
 
 We use phpunit for tests. You can execute the following task to run the tests:
 
-```bash
+```shell
 composer run test
 ```
 
