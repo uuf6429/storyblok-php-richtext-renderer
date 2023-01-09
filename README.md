@@ -1,6 +1,7 @@
 # Storyblok PHP Richtext Renderer
 
-This package allows you to get an HTML string from the [richtext field](https://www.storyblok.com/docs/richtext-field) of Storyblok.
+This package allows you to get an HTML string from the [richtext field](https://www.storyblok.com/docs/richtext-field)
+of Storyblok.
 
 ## Installation
 
@@ -39,8 +40,11 @@ $resolver->render($data) # renders a html string: '<hr />'
 
 ### Can I extend or replace the schema for a resolver?
 
-Yes! Either create a class that [extends DefaultSchema](https://github.com/storyblok/storyblok-php-richtext-renderer/blob/master/src/DefaultSchema.php)
-or a class that [implements SchemaInterface]() and then pass it as parameter to the Resolver class.
+Yes! Either create a class that
+[extends DefaultSchema](https://github.com/storyblok/storyblok-php-richtext-renderer/blob/master/src/DefaultSchema.php)
+or a class that
+[implements SchemaInterface](https://github.com/storyblok/storyblok-php-richtext-renderer/blob/master/src/SchemaInterface.php)
+and then pass it as a parameter to the Resolver class.
 Here's an example:
 
 ```php
